@@ -1,7 +1,9 @@
-import { readFileSync, writeFileSync, existsSync } from 'fs'
-import {spawnSync} from 'child_process'
-import {normalizePath} from 'vite';
-import address from "address"
+const { readFileSync, writeFileSync, existsSync } = require('fs')
+const { spawnSync } = require('child_process')
+const {normalizePath} = require('vite')
+const address = require("address")
+
+module.exports = ViteCapacitor
 
 const pwaElementsScript = `<script
 type="module"
@@ -24,7 +26,7 @@ const capacitorConfigFiles = [
  * 
  * @returns {import("vite").Plugin}
  */
-export default function (options = { pwaElementsVersion: 3, silent: false }) {
+function ViteCapacitor (options = { pwaElementsVersion: 3, silent: false }) {
   return {
     name: 'vite-plugin-capacitor',
     enforce: 'pre',

@@ -1,0 +1,36 @@
+{
+  "name": "vite-plugin-capacitor",
+  "version": "0.1.0",
+  "description": "Vite plugin for Capacitor JS.",
+  "main": "index.js",
+  "exports": {
+    ".": "./index.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ekoeryanto/vite-plugin-capacitor.git"
+  },
+  "keywords": [
+    "vite",
+    "capacitor",
+    "android",
+    "ios",
+    "web",
+    "electron"
+  ],
+  "author": "Eko Eryanto <ekoeryanto@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ekoeryanto/vite-plugin-capacitor/issues"
+  },
+  "homepage": "https://github.com/ekoeryanto/vite-plugin-capacitor#readme",
+  "peerDependencies": {
+    "vite": "^2.2.0"
+  },
+  "dependencies": {
+    "address": "^1.1.2"
+  }
+}

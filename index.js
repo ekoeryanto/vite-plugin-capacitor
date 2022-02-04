@@ -4,11 +4,11 @@ import address from "address"
 
 const pwaElementsScript = `<script
 type="module"
-src="https://unpkg.com/@ionic/pwa-elements@2/dist/ionicpwaelements/ionicpwaelements.esm.js"
+src="https://unpkg.com/@ionic/pwa-elements@3/dist/ionicpwaelements/ionicpwaelements.esm.js"
 ></script>
 <script
 nomodule
-src="https://unpkg.com/@ionic/pwa-elements@2/dist/ionicpwaelements/ionicpwaelements.js"
+src="https://unpkg.com/@ionic/pwa-elements@3/dist/ionicpwaelements/ionicpwaelements.js"
 ></script>`
 
 const capacitorConfigFiles = [
@@ -68,7 +68,7 @@ export default function (options = { pwaElementsVersion: 3, silent: false }) {
         findFor,
         [
           findFor,
-          pwaElementsScript
+          pwaElementsScript.replace(/@3/g, `@${options.pwaElementsVersion}`)
         ].join('\n')
       );
     }

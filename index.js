@@ -1,4 +1,5 @@
-import { writeFileSync, existsSync } from 'fs'
+import { readFileSync, writeFileSync, existsSync } from 'fs'
+import {spawnSync} from 'child_process'
 import {normalizePath} from 'vite';
 import address from "address"
 
@@ -28,14 +29,14 @@ export default function (options = { pwaElementsVersion: 3, silent: false }) {
     name: 'vite-plugin-capacitor',
     enforce: 'pre',
     apply(_config, { command, mode }) {
-      return command === 'serve' && mode === 'capacitor'
+      return mode === 'capacitor'
     },
     configureServer(server) {
       server.httpServer.once('listening', () => {
         const capSync = spawnSync('npx', ['cap', 'sync']);
-        if (!options.silent) {
-          console.log(capSync.output.toString());
-        }
+        console.log(capSync.output.toString());
+        
+        if (server.config.command === 'build') return
 
         const { host, port, https } = server.config.server;
         const machine = typeof host !== 'string' ? address.ip() : host;

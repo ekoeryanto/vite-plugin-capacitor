@@ -2,9 +2,15 @@
   "name": "vite-plugin-capacitor",
   "version": "0.1.0",
   "description": "Vite plugin for Capacitor JS.",
-  "main": "index.js",
-  "exports": {
-    ".": "./index.js"
+  "type": "module",
+  "exports": "./index.js",
+  "types": "./index.d.ts",
+  "files": [
+    "./index.js",
+    "./index.d.ts"
+  ],
+  "engines": {
+    "node": ">=12"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

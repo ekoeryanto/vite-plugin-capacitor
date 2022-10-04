@@ -33,9 +33,9 @@
   },
   "homepage": "https://github.com/ekoeryanto/vite-plugin-capacitor#readme",
   "peerDependencies": {
-    "vite": "^2.2.0"
+    "vite": ">=2.2.0"
   },
   "dependencies": {
-    "address": "^1.1.2"
+    "address": "^1.2.1"
   }
 }

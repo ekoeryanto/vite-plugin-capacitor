@@ -14,11 +14,6 @@ nomodule
 src="https://unpkg.com/@ionic/pwa-elements@3/dist/ionicpwaelements/ionicpwaelements.js"
 ></script>`
 
-const capacitorConfigFiles = [
-  './ios/App/App/capacitor.config.json',
-  './android/app/src/main/assets/capacitor.config.json'
-]
-
 /**
  * @param {object} [options] 
  * @param {number} [options.pwaElementsVersion=3]
@@ -30,39 +25,34 @@ function ViteCapacitor (options = { pwaElementsVersion: 3, silent: false }) {
   return {
     name: 'vite-plugin-capacitor',
     enforce: 'pre',
-    apply(_config, { command, mode }) {
-      return mode === 'capacitor'
+    apply(config, env) {
+      return (
+        Boolean(config.server.host) &&
+        env.command === 'serve' &&
+        config.mode === 'capacitor'
+      );
     },
     configureServer(server) {
-      server.httpServer.once('listening', () => {
-        const capSync = spawnSync('npx', ['cap', 'sync']);
-        console.log(capSync.output.toString());
-        
-        if (server.config.command === 'build') return
+      const { logger } = server.config;
 
+      server.httpServer.once('listening', () => {
         const { host, port, https } = server.config.server;
         const machine = typeof host !== 'string' ? address.ip() : host;
-        for (const file of capacitorConfigFiles.map(normalizePath)) {
-          if (!existsSync(file)) {
-            options.silent || console.log('SKIP Updating capacitor config on IOS')
-            continue
-          }
-
-          const cap = JSON.parse(
-            readFileSync(file).toString()
-          );
-  
-          cap.server = {
-            ...(cap.server || {}),
-            url: `http${https ? 's' : ''}://${machine}:${port}`,
+        const url = `http${https ? 's' : ''}://${machine}:${port}`;
+        process.env.VITE_CAPACITOR_URL = url;
+        const jsonFile = normalizePath('capacitor.config.json');
+        if (existsSync(jsonFile)) {
+          const json = JSON.parse(readFileSync(jsonFile, 'utf-8'))
+          json.server = {
+            ...(json.server || {}),
+            url,
             cleartext: true,
           };
-  
-          writeFileSync(
-            file,
-            JSON.stringify(cap, null, 2)
-          );  
+          writeFileSync(jsonFile, JSON.stringify(json, null, 2))
         }
+        logger.info(`Capacitor URL is ${url}`);
+        const capSync = spawnSync('npx', ['cap', 'sync']);
+        logger.info(capSync.output.toString());
       })
     },
     transformIndexHtml(html) {

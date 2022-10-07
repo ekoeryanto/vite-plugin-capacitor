@@ -27,7 +27,7 @@ function ViteCapacitor (options = { pwaElementsVersion: 3, silent: false }) {
     enforce: 'pre',
     apply(config, env) {
       return (
-        Boolean(config.server.host) &&
+        Boolean(config.server?.host) &&
         env.command === 'serve' &&
         config.mode === 'capacitor'
       );

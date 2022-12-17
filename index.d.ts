@@ -1,4 +1,4 @@
 export default function _default(options?: {
-    pwaElementsVersion?: number;
+    pwaElementsVersion?: number | false;
     silent?: boolean;
 }): import("vite").Plugin;

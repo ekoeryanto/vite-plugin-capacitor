@@ -56,6 +56,7 @@ function ViteCapacitor (options = { pwaElementsVersion: 3, silent: false }) {
       })
     },
     transformIndexHtml(html) {
+      if (!pwaElementsVersion) return html
       const findFor = '</script>'
       return html.replace(
         findFor,
